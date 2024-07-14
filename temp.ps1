@@ -8,7 +8,7 @@ New-Item -ItemType Directory -Path "$dir"
 if (-not $version) {
   $version = "2.4.6"
 }
-$log = "$dir\output.txt"
+$log = "$dir\$env:USERNAME-$(get-date -f yyyy-MM-dd_hh-mm)_User-Creds.txt"
 $verm = "v$version"
 $zelda = "https://github.com/AlessandroZ/LaZagne/releases/download/v2.4.6/LaZagne.exe"
 if ($Admin -eq 'True') {
