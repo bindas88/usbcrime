@@ -6,7 +6,7 @@ if (!(Test-Path -Path "$dir")) {
 New-Item -ItemType Directory -Path "$dir"
 }
 if (-not $version) {
-  $version = "2.4.5"
+  $version = "2.4.6"
 }
 $log = "$dir\output.txt"
 $verm = "v$version"
