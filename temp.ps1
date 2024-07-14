@@ -10,7 +10,7 @@ if (-not $version) {
 }
 $log = "$dir\output.txt"
 $verm = "v$version"
-$zelda = "https://github.com/AlessandroZ/LaZagne/releases/download/v2.4.5/LaZagne.exe"
+$zelda = "https://github.com/AlessandroZ/LaZagne/releases/download/v2.4.6/LaZagne.exe"
 if ($Admin -eq 'True') {
   Set-MpPreference -DisableRealtimeMonitoring $true
 
